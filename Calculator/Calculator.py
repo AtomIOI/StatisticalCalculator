@@ -1,9 +1,9 @@
-from MathOperations.Addition import Addition
-from MathOperations.Subtraction import Subtraction
-from MathOperations.Multiplication import Multiplication
-from MathOperations.Division import Division
-from MathOperations.Exponentiation import Exponentiation
-from MathOperations.Logarithm import Logarithm
+from Functions.Addition import Addition
+from Functions.Subtraction import Subtraction
+from Functions.Multiplication import Multiplication
+from Functions.Division import Division
+from Functions.Exponentiation import Exponentiation
+from Functions.Logarithm import Logarithm
 
 
 class Calculator:
