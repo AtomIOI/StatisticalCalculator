@@ -1,4 +1,4 @@
-from Functions.RandomNumberGenerator import RNG
+from Functions.Random import RNG
 
 
 class StatsCalculator:
