@@ -6,6 +6,7 @@ from Functions.Multiplication import Multiplication
 from Functions.Division import Division
 from Functions.Exponentiation import Exponentiation
 from Functions.Logarithm import Logarithm
+from Functions.Random import RNG
 
 
 class MyTestCase(unittest.TestCase):
@@ -32,6 +33,25 @@ class MyTestCase(unittest.TestCase):
     def test_MathOperations_Logarithm(self):
         self.assertEqual(3, Logarithm.log(2, 8))
 
+    def test_Random_Integer_Seed(self):
+        self.assertEqual(9, RNG.prandINT(1, 10, 30))
+
+    def test_Random_Float_Seed(self):
+        self.assertEqual(5.851734081452295, RNG.prandFLT(1, 10, 30))
+
+    def test_Random_IntegerList_Seed(self):
+        self.assertEqual([9, 5, 1, 4, 5], RNG.prandINTL(1, 10, 5, 30))
+
+    def test_Random_FloatList_Seed(self):
+        self.assertEqual([5.851734081452295, 3.6027679927574847, 1.2703321769601437, 6.882721785034857, 2.89007825994758], RNG.prandFLTL(1, 10, 5, 30))
+
+    def test_Random_Selection_Seed(self):
+        arr = [1, 2, 3, 4, 5]
+        self.assertEqual(5, RNG.prandElem(arr, 30))
+
+    def test_Random_Multiple_Selection_Seed(self):
+        arr = [1, 2, 3, 4, 5]
+        self.assertEqual([5, 3, 5, 1, 5], RNG.prandElems(arr, 5, 30))
 
 if __name__ == '__main__':
     unittest.main()
