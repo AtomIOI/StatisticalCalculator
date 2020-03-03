@@ -5,6 +5,7 @@ from Functions.Addition import Addition
 from Functions.Subtraction import Subtraction
 from Functions.Exponentiation import Exponentiation
 from Functions.Random import RNG
+from scipy import stats
 
 
 class Stats:
@@ -24,7 +25,7 @@ class Stats:
         if size % 2 == 0:
             medOne = array[(size // 2) - 1]
             medTwo = array[size // 2]
-            return Division.quotient(medOne + medTwo, 2)
+            return Division.quotient(Addition.sum(medOne, medTwo), 2)
         return array[math.floor(Division.quotient(size, 2))]
 
     # Mode
@@ -84,20 +85,45 @@ class Stats:
     def correlationS(array):
         x = array[0]
         y = array[1]
-        result = 0
-        coe = Division.quotient(x[0],y[0])
-        for index in range(1, len(x)):
-            print(x[index], " ", y[index])
-            if Division.quotient(x[index], y[index]) >= coe:
-                result += 1
-            else:
-                result -= 1
-        return Division.quotient(result, len(x))
+        meanX = Stats.mean(x)
+        meanY = Stats.mean(y)
+        numerator = 0
+        for index in range(len(x)):
+            xdiff = Subtraction.difference(x[index], meanX)
+            ydiff = Subtraction.difference(y[index], meanY)
+            numerator += Multiplication.product(xdiff, ydiff)
+        covariance = Division.quotient(numerator, len(x))
+        stdX = Stats.standardDeviation(x)
+        stdY = Stats.standardDeviation(y)
+        return Division.quotient(covariance, (Multiplication.product(stdX, stdY)))
+
     # Population Correlation
+    @staticmethod
+    def correlationP(array):
+        x = array[0]
+        y = array[1]
+        meanX = Stats.mean(x)
+        meanY = Stats.mean(y)
+        numerator = 0
+        for index in range(len(x)):
+            xdiff = Subtraction.difference(x[index], meanX)
+            ydiff = Subtraction.difference(y[index], meanY)
+            numerator += Multiplication.product(xdiff, ydiff)
+        covariance = Division.quotient(numerator, (len(x)) - 1)
+        stdX = Stats.standardDeviation(x)
+        stdY = Stats.standardDeviation(y)
+        return Division.quotient(covariance, (Multiplication.product(stdX, stdY)))
+
     # Z - Score
+    @staticmethod
+    def zscore(array):
+        return stats.zscore(array)
+
     # Mean Deviation/ Mean Absolute Deviation
-
-
-dem = Stats()
-arr = [[1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 5, 6]]
-print(dem.correlationS(arr))
+    @staticmethod
+    def meanDeviation(array):
+        mean = Stats.mean(array)
+        numerator = 0
+        for elem in array:
+            numerator += abs(Subtraction.difference(elem, mean))
+        return Division.quotient(numerator, len(array))
