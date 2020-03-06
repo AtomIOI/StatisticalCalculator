@@ -4,7 +4,6 @@ from Functions.Multiplication import Multiplication
 from Functions.Addition import Addition
 from Functions.Subtraction import Subtraction
 from Functions.Exponentiation import Exponentiation
-from Functions.Random import RNG
 from scipy import stats
 
 

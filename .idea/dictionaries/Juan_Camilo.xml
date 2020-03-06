@@ -6,6 +6,10 @@
       <w>prand</w>
       <w>stdev</w>
       <w>sumlist</w>
+      <w>tval</w>
+      <w>xdiff</w>
+      <w>ydiff</w>
+      <w>zscore</w>
     </words>
   </dictionary>
 </component>
