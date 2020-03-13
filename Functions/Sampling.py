@@ -1,12 +1,7 @@
 import math
 from scipy import stats
 from Functions.Random import RNG
-from Functions.Division import Division
 from Functions.Statistics import Stats
-from Functions.Multiplication import Multiplication
-from Functions.Addition import Addition
-from Functions.Subtraction import Subtraction
-from Functions.Exponentiation import Exponentiation
 
 
 class Sampling:
@@ -24,7 +19,7 @@ class Sampling:
     def systematicSample(array, n):
         result = []
         while n > 0:
-            index = len(array)//n
+            index = len(array) // n
             if index >= len(array):
                 index -= 1
             result.append(array.pop(index))
@@ -38,8 +33,8 @@ class Sampling:
         alpha = 1 - ci
         tval = stats.t.ppf(1 - alpha, df)
         stdev = Stats.standardDeviation(array)
-        se = Division.quotient(stdev, Exponentiation.power(len(array), .5))
-        numerate = Multiplication.product(se, tval)
+        se = stdev / math.pow(len(array), .5)
+        numerate = se * tval
         mean = Stats.mean(array)
         return [mean - numerate, mean + numerate]
 
@@ -49,8 +44,8 @@ class Sampling:
         df = n - 1
         alpha = 1 - ci
         tval = stats.t.ppf(1 - alpha, df)
-        se = Division.quotient(stdev, Exponentiation.power(n, .5))
-        return Multiplication.product(tval, se)
+        se = stdev / math.pow(n, .5)
+        return tval * se
 
     # Cochran’s Sample Size Formula
     @staticmethod
@@ -58,12 +53,35 @@ class Sampling:
         df = len(array) - 1
         zscore = stats.t.ppf(e, df)
         q = 1 - p
-        exp = Exponentiation.power(zscore, 2)
-        numerator = Multiplication.product(p*q, exp)
-        return Division.quotient(numerator, Exponentiation.power(e, 2))
+        exp = math.pow(zscore, 2)
+        numerator = (p * q) * exp
+        return numerator / math.pow(e, 2)
 
     # How to Find a Sample Size Given a Confidence Interval and Width (unknown population standard deviation)
+    @staticmethod
+    def unknown_pop_sample(data, percent):
+        zs = Stats.zscore(data)
+        me = Sampling.marginError(data)
+        p = percent
+        q = (1 - p)
+
+        val = (zs / me)
+        samplePop = math.sqrt(val) * p * q
+
+        return samplePop
+
     # How to Find a Sample Size Given a Confidence Interval and Width (known population standard deviation)
+    @staticmethod
+    def known_pop_sample(data):
+        zs = Stats.zscore(data)
+        me = Sampling.marginError(data)
+        sd = Stats.standardDeviation(data)
+
+        value = (zs * sd) / me
+
+        popSample = math.sqrt(value)
+
+        return popSample
 
 
 dem = Sampling()
