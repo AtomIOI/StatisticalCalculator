@@ -40,12 +40,11 @@ class Sampling:
 
     # Margin of Error
     @staticmethod
-    def marginError(stdev, ci, n):
-        df = n - 1
-        alpha = 1 - ci
-        tval = stats.t.ppf(1 - alpha, df)
-        se = stdev / math.pow(n, .5)
-        return tval * se
+    def marginError(data):
+        zs = Stats.zscore(data)
+        sd = Stats.standardDeviation(data)
+        margin = zs * sd
+        return margin
 
     # Cochran’s Sample Size Formula
     @staticmethod
@@ -63,10 +62,10 @@ class Sampling:
         zs = Stats.zscore(data)
         me = Sampling.marginError(data)
         p = percent
-        q = (1 - p)
+        q = 1 - p
 
-        val = (zs / me)
-        samplePop = math.sqrt(val) * p * q
+        val = zs / me
+        samplePop = val ** 0.5 * p * q
 
         return samplePop
 
@@ -79,6 +78,6 @@ class Sampling:
 
         value = (zs * sd) / me
 
-        popSample = math.sqrt(value)
+        popSample = value ** 0.5
 
         return popSample

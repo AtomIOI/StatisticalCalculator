@@ -82,7 +82,7 @@ class Stats:
         meanX = Stats.mean(x)
         meanY = Stats.mean(y)
         numerator = 0
-        for index in range(len(x)):
+        for index in range(len(y)):
             xdiff = (x[index] - meanX)
             ydiff = (y[index] - meanY)
             numerator += (xdiff * ydiff)
@@ -99,7 +99,7 @@ class Stats:
         meanX = Stats.mean(x)
         meanY = Stats.mean(y)
         numerator = 0
-        for index in range(len(x)):
+        for index in range(len(y)):
             xdiff = (x[index] - meanX)
             ydiff = (y[index] - meanY)
             numerator += (xdiff * ydiff)
