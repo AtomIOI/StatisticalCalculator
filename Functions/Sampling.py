@@ -82,9 +82,3 @@ class Sampling:
         popSample = math.sqrt(value)
 
         return popSample
-
-
-dem = Sampling()
-arr = RNG.prandINTL(0, 10, 100, 1)
-print(arr)
-print(dem.cochran(arr, .05, .5))
